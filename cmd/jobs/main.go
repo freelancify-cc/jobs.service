@@ -5,12 +5,13 @@ import (
 	"net/http"
 	"time"
 
+    "github.com/freelancing/jobs/config"
     "github.com/freelancing/jobs/api/v1/router"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
 
-func initializeBookclubRoutes(r *chi.Mux) {
+func initializeRoutes(r *chi.Mux) {
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/plain")
 		w.Write([]byte("bookclub server"))
@@ -20,7 +21,7 @@ func initializeBookclubRoutes(r *chi.Mux) {
 	})
 }
 
-func initializeBookclubServer() *chi.Mux {
+func initializeServer() *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Use(
@@ -33,24 +34,24 @@ func initializeBookclubServer() *chi.Mux {
 
 	r.Use(middleware.Timeout(20 * time.Second))
 
-	initializeBookclubRoutes(r)
+	initializeRoutes(r)
 
 	return r
 }
 
 func main() {
 	// load config file
-	//config := config.GetConfig()
+	config := config.GetConfig()
 
 	// initialize database
 	//database.Initialize(config)
 
 
 	// initialize server
-	r := initializeBookclubServer()
+	r := initializeServer()
 
-    log.Printf("[!] Starting freelancify job service on %s:%s", "127.0.0.1", "4444")
+    log.Printf("[!] Starting freelancify job service on %s:%s", config.Host, config.Port)
 
 	// start listener
-    http.ListenAndServe("127.0.0.1"+ ":" + "4444", r)
+    http.ListenAndServe(config.Host+ ":" + config.Port, r)
 }
