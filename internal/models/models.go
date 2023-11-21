@@ -25,10 +25,12 @@ type PaymentPlanModel struct {
 }
 
 type JobModel struct {
-    BaseModel 
+    BaseModel
     JobName string `json:"job_name"`
     JobDescription string `json:"job_description"`
     PostedEmployer uuid.UUID `json:"posted_employer" gorm:"type:uuid"`
     JobStatus int `json:"job_status"`
+    JobStatusModel JobStatusModel `gorm:"freignKey:JobStatus"`
     PaymentPlan int `jsob:"payment_plan"`
+    PaymentPlanModel PaymentPlanModel `gorm:"foreignKey:PaymentPlan"`
 }
