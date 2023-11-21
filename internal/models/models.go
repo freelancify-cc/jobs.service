@@ -14,6 +14,16 @@ type BaseModel struct {
 	DeletedAt gorm.DeletedAt `json:"deletedAt" gorm:"index"`
 }
 
+type JobStatusModel struct {
+    Id int `json:"id"`
+    Status string `json:"status"`
+}
+
+type PaymentPlanModel struct {
+    Id  int `json:"id"`
+    Plan string `json:"plan"`
+}
+
 type JobModel struct {
     BaseModel 
     JobName string `json:"job_name"`
