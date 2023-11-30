@@ -7,8 +7,8 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 
-	"github.com/freelancing/jobs/config"
-	"github.com/freelancing/jobs/internal/models"
+	"github.com/freelancify/jobs/config"
+	"github.com/freelancify/jobs/internal/models"
 )
 
 var Db *gorm.DB

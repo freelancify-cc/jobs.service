@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-    "github.com/freelancing/jobs/config"
-    "github.com/freelancing/jobs/api/v1/router"
+	"github.com/freelancify/jobs/api/v1/router"
+	"github.com/freelancify/jobs/config"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
@@ -46,12 +46,11 @@ func main() {
 	// initialize database
 	//database.Initialize(config)
 
-
 	// initialize server
 	r := initializeServer()
 
-    log.Printf("[!] Starting freelancify job service on %s:%s", config.Host, config.Port)
+	log.Printf("[!] Starting freelancify job service on %s:%s", config.Host, config.Port)
 
 	// start listener
-    http.ListenAndServe(config.Host+ ":" + config.Port, r)
+	http.ListenAndServe(config.Host+":"+config.Port, r)
 }

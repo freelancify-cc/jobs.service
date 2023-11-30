@@ -8,10 +8,11 @@ import (
 
 // Config : struct
 type Config struct {
-	Environment         string `json:"env"`
-    Host                string `json:"host"`
-	Port                string `json:"port"`
-	DbString            string `json:"db"`
+	Environment    string `json:"env"`
+	Host           string `json:"host"`
+	Port           string `json:"port"`
+	DbString       string `json:"db"`
+	AuthServiceUrl string `json:"auth_service_url`
 }
 
 var config *Config
