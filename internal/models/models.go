@@ -15,11 +15,13 @@ type BaseModel struct {
 }
 
 type JobStatusModel struct {
+	gorm.Model
 	Id     int    `json:"id"`
 	Status string `json:"status"`
 }
 
 type PaymentPlanModel struct {
+	gorm.Model
 	Id   int    `json:"id"`
 	Plan string `json:"plan"`
 }
@@ -28,9 +30,9 @@ type JobModel struct {
 	BaseModel
 	JobName          string           `json:"job_name"`
 	JobDescription   string           `json:"job_description"`
-	PostedEmployer   uuid.UUID        `json:"posted_employer_id" gorm:"type:uuid"`
+	PostedEmployer   uuid.UUID        `json:"posted_employer_id,omitempty" gorm:"type:uuid"`
 	JobStatus        int              `json:"job_status"`
-	JobStatusModel   JobStatusModel   `gorm:"freignKey:JobStatus"`
+	JobStatusModel   JobStatusModel   `gorm:"foreignKey:JobStatus"`
 	PaymentPlan      int              `jsob:"payment_plan"`
 	PaymentPlanModel PaymentPlanModel `gorm:"foreignKey:PaymentPlan"`
 }

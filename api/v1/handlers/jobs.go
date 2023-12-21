@@ -1,4 +1,4 @@
-package handlers
+package jobshandler
 
 import (
 	"encoding/json"
@@ -6,8 +6,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/freelancing/jobs/internal/database"
-	"github.com/freelancing/jobs/internal/models"
+	"github.com/freelancify/jobs/internal/database"
+	"github.com/freelancify/jobs/internal/models"
+	"github.com/google/uuid"
 )
 
 func GetAllJobs(w http.ResponseWriter, r *http.Request) {
@@ -25,10 +26,18 @@ func GetAllJobs(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	w.Write(b)
+	return
 }
 
 func CreateJob(w http.ResponseWriter, r *http.Request) {
+	println("comes here")
 	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	id, err := uuid.Parse(r.Context().Value("id").(string))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -36,6 +45,7 @@ func CreateJob(w http.ResponseWriter, r *http.Request) {
 
 	var job models.JobModel
 	err = json.Unmarshal(body, &job)
+	job.PostedEmployer = id
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -54,9 +64,10 @@ func CreateJob(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusAccepted)
 	w.Write([]byte(j))
+	return
 }
 
-func GetJobById(w http.ResponseWriter, r *http.Request) {
+func GetJobDetails(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(r.Context().Value("id").(string))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
