@@ -7,6 +7,7 @@ import (
 
 	"github.com/freelancify/jobs/api/v1/router"
 	"github.com/freelancify/jobs/config"
+	"github.com/freelancify/jobs/internal/database"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
@@ -14,7 +15,7 @@ import (
 func initializeRoutes(r *chi.Mux) {
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/plain")
-		w.Write([]byte("bookclub server"))
+		w.Write([]byte("freelancify job service"))
 	})
 	r.Route("/api", func(r chi.Router) {
 		r.Mount("/v1", router.SetupRoutes())
@@ -25,7 +26,6 @@ func initializeServer() *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Use(
-		middleware.RedirectSlashes,
 		middleware.Recoverer,
 		middleware.Heartbeat("/health"),
 		middleware.Logger,
@@ -44,7 +44,7 @@ func main() {
 	config := config.GetConfig()
 
 	// initialize database
-	//database.Initialize(config)
+	database.Initialize(config)
 
 	// initialize server
 	r := initializeServer()

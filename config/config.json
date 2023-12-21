@@ -2,5 +2,6 @@
     "env": "dev",
     "host": "0.0.0.0",
     "port": "8001",
-    "db": "postgres://freelancify_dev:dev@localhost:5432/freelancify_job_service_dev?sslmode=disable"
+    "db": "postgres://freelancify_dev:dev@localhost:5432/freelancify_job_service_dev?sslmode=disable",
+    "auth_service_url": "http://localhost:8002"
 }

@@ -11,13 +11,31 @@ type JobRoutes struct{}
 func (j JobRoutes) Routes() chi.Router {
 	r := chi.NewRouter()
 
-	r.Route("/{", func(jobRoutes chi.Router) {
-		jobRoutes.Use(middleware.EnsureAuth)
-		jobRoutes.Use(middleware.ExtractUserId)
-		jobRoutes.Get("/", jobshandler.GetJobDetails)
-		jobRoutes.Get("/", jobshandler.GetAllJobs)
-		jobRoutes.Post("/", jobshandler.CreateJob)
+	r.Get("/", jobshandler.GetAllJobs)
+	r.Get("/{id}", jobshandler.GetJobDetails)
+
+	r.Group(func(routes chi.Router) {
+		routes.Use(middleware.EnsureAuth)
+		routes.Use(middleware.ExtractUserId)
+		routes.Post("/", jobshandler.CreateJob)
 	})
 
+	/*
+		r.Group(func(routes chi.Router) {
+			routes.Use(middleware.EnsureAuth)
+			routes.Use(middleware.ExtractUserId)
+			routes.Use(middleware.JobCtx)
+		})
+
+
+			r.Route("/", func(jobRoutes chi.Router) {
+				jobRoutes.Get("/", jobshandler.GetAllJobs)
+				jobRoutes.Route("/create", func(postJobRoute chi.Router) {
+					postJobRoute.Use(middleware.EnsureAuth)
+					postJobRoute.Use(middleware.ExtractUserId)
+
+				})
+			})
+	*/
 	return r
 }

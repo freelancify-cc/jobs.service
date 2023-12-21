@@ -12,7 +12,7 @@ type Config struct {
 	Host           string `json:"host"`
 	Port           string `json:"port"`
 	DbString       string `json:"db"`
-	AuthServiceUrl string `json:"auth_service_url`
+	AuthServiceUrl string `json:"auth_service_url"`
 }
 
 var config *Config

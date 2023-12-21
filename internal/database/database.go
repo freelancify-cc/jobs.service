@@ -9,6 +9,7 @@ import (
 
 	"github.com/freelancify/jobs/config"
 	"github.com/freelancify/jobs/internal/models"
+	"github.com/google/uuid"
 )
 
 var Db *gorm.DB
@@ -52,7 +53,7 @@ func SelectJobById(id int) (models.JobModel, error) {
 	return job, result.Error
 }
 
-func DeleteRequestById(id int) error {
+func DeleteRequestById(id uuid.UUID) error {
 	var job models.JobModel
 	job.Id = id
 	result := Db.Delete(&job)
